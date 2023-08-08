@@ -1,7 +1,8 @@
-import React, { useReducer, useMemo } from 'react';
+import React, { useReducer, useMemo, useState } from 'react';
 import UserList from './UserList';
 import CreateUser from './CreateUser';
 import Button from './components/Button';
+import CheckBox from './components/CheckBox';
 
 function countActiveUsers(users) {
   console.log('활성 사용자수 세는 중');
@@ -70,8 +71,16 @@ function App() {
   const { users } = state;
   const count = useMemo(() => countActiveUsers(users), [users]);
 
+  const [check, setCheck] = useState(false);
+  const onChange = e => {
+    setCheck(e.target.checked);
+  };
   return (
     <UserDispatch.Provider value={dispatch}>
+      <div>
+        <CheckBox onChange={onChange} checked={check}>약관에 모두 동의</CheckBox>
+        <p>check: {check.toString()}</p>
+      </div>
       <div className="buttons">
         <Button
           size="large"
