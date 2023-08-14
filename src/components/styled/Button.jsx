@@ -51,6 +51,19 @@ const sizeStyles = css`
   `}
 `;
 
+const fullWidthStyle = css`
+  ${props =>
+    props.fullWidth && 
+    css`
+      width: 100%;
+      justify-content: center;
+      & + & {
+        margin-left: 0;
+        margin-top: 1rem;
+      }
+    `}
+`;
+
 const StyledButton = styled.button`
   /* 공통 스타일 */
   display: inline-flex;
@@ -73,10 +86,12 @@ const StyledButton = styled.button`
   & + & {
     margin-left: 1rem;
   }
+
+  ${fullWidthStyle}
 `;
 
-export default function Button({ children, color, size, outline, ...rest }) {
-  return <StyledButton color={color} size={size} outline={outline} {...rest}>{children}</StyledButton>
+export default function Button({ children, color, size, outline, fullWidth, ...rest }) {
+  return <StyledButton color={color} size={size} outline={outline} fullWidth={fullWidth} {...rest}>{children}</StyledButton>
 }
 
 Button.defaultProps = {

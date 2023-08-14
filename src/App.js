@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { ThemeProvider } from 'styled-components';
 import Button from './components/styled/Button';
+import Dialog from './components/styled/Dialog';
 
 const AppBlock = styled.div`
   width: 512px;
@@ -10,7 +11,27 @@ const AppBlock = styled.div`
   padding: 1rem;
 `;
 
+const ButtonGroup = styled.div`
+  & + & {
+    margin-top: 1rem;
+  }
+`;
+
+
 function App() {
+  const [dialog, setDialog] = useState(false);
+  const onClick = () => {
+    setDialog(true);
+  };
+  const onConfirm = () => {
+    console.log('확인');
+    setDialog(false);
+  };
+  const onCancel = () => {
+    console.log('취소');
+    setDialog(false);
+  };
+
   return (
     <ThemeProvider
       theme={{
@@ -21,11 +42,19 @@ function App() {
         }
       }}
     >
-      <AppBlock>
-        <Button size="small" outline>버튼</Button>
-        <Button color="pink" >버튼</Button>
-        <Button color="gray" size="large" >버튼</Button>
-      </AppBlock>
+      <>
+        <AppBlock>
+          <ButtonGroup>
+            <Button size="small">버튼</Button>
+            <Button outline color="pink" >버튼</Button>
+            <Button color="gray" size="large" >버튼</Button>
+            <Button fullWidth onClick={onClick}>풀버튼</Button>
+          </ButtonGroup>
+        </AppBlock>
+        <Dialog title="제목이다" visible={dialog} onConfirm={onConfirm} onCancel={onCancel}>
+          내용입니다!
+        </Dialog>
+      </>
     </ThemeProvider>
   )
 }
